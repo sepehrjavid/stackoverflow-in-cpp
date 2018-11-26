@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 #include "Content.h"
-#define lower(str) transform(str.begin(), str.end(), str.begin(), ::tolower)
+
+//#define lower(str) transform(str.begin(), str.end(), str.begin(), ::tolower)
 using namespace std;
 
 enum UserType {

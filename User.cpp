@@ -12,7 +12,7 @@ vector<User> User::users;
 string User::salt;
 
 User::User(string username, string password, string email, UserType type){
-    lower(username);
+//    lower(username);
     this->username = username;
     set_password(std::move(password));
     this->email = email;
@@ -34,7 +34,7 @@ bool User::check_password(string password){
 }
 
 bool User::authenticate(string username, string password){
-    lower(username);
+//    lower(username);
     return this->username == username and check_password(password);
 }
 void User::deleteAccount(){

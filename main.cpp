@@ -4,6 +4,7 @@
 #include "AbstractUser.h"
 #include "Exceptions.h"
 #include "User.h"
+#include "Database.h"
 
 #ifdef _WIN32
 #define CLEAR "cls"
@@ -22,7 +23,7 @@ enum MenuState {
 };
 
 int main() {
-
+//    init();
     User::init("SECRET_KEY");
     User * loggedInUser = nullptr;
     MenuState menuState = MenuState::START;
