@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vector>
 
+#include <sqlite_modern_cpp.h>
+using namespace sqlite;
+
 
 using namespace std;
 
@@ -36,10 +39,25 @@ void Content::print_answers() {
     cout<<"\n\n";
 }
 
-ContentRelation::ContentRelation(Content* destination, Content* source ,ContentRelationType  type) {
+ContentRelation::ContentRelation(Content* destination, Content* source ,ContentRelationType type) {
     this->destination = destination;
     this->source = source;
     this->type = type;
+    string tt;
+    if(type==ContentRelationType::ANSWER_TO){tt="ANSWER_TO";}
+    if(type==ContentRelationType::DUPLICTE_OF){tt="DUPLICTE_OF";}
+    int a1,a2;
+    database db("dbfile.db");
+    db << "select _id from Content where body=? and visits=?  ;"
+       << source->body << source->visits
+       >> [&](int _id) { a1 = _id; };
+    db << "select _id from Content where body=? and visits=?  ;"
+       <<destination->body << destination->visits
+       >> [&](int _id) { a2 = _id; };
+    db << "insert into ContentRelation (type,destination_id,source_id) values (?,?,?);"
+       << tt
+       << a2
+       << a1;
 }
 ContentRelation::~ContentRelation() {
     vector<ContentRelation*> *c1 = &(this->destination->relations);
@@ -54,4 +72,8 @@ ContentRelation::~ContentRelation() {
             c1->erase(i);
         }
     }
+//    database db("dbfile.db");
+//    db << "delete _id from user where body=? and visits=?  ;"
+//       << source->body << source->visits
+
 }

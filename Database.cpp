@@ -1,16 +1,16 @@
 #include "Database.h"
 using namespace sqlite;
 
+database db("dbfile.db");
 void init(){
-    database db("dbfile.db");
-    db << "create table user ("
+    db << "create table User ("
           "_id integer primary key autoincrement not null,"
           "username text,"
           "email text,"
           "hash_pass text,"
           "type text"
           ");";
-    db << "create table content ("
+    db << "create table Content ("
           "_id integer primary key autoincrement not null,"
           "body text,"
           "user_id integer,"
@@ -22,6 +22,4 @@ void init(){
           "destination_id integer,"
           "type text"
           ");";
-
-
 }

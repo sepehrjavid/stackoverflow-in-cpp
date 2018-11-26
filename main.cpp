@@ -23,7 +23,7 @@ enum MenuState {
 };
 
 int main() {
-//    init();
+    init();
     User::init("SECRET_KEY");
     User * loggedInUser = nullptr;
     MenuState menuState = MenuState::START;
