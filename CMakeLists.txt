@@ -18,6 +18,7 @@ add_executable(stackoverflow_in_cpp3
         hdr/sqlite_modern_cpp/errors.h
         hdr/sqlite_modern_cpp/log.h
         hdr/sqlite_modern_cpp/sqlcipher.h
+        hdr/sqlite_modern_cpp/type_wrapper.h
         hdr/sqlite_modern_cpp.h
         AbstractUser.h
         Content.cpp
@@ -33,5 +34,6 @@ add_executable(stackoverflow_in_cpp3
         README.md
         User.cpp
         User.h)
+
 
 target_link_libraries(stackoverflow_in_cpp3 LINK_PUBLIC sqlite3)
