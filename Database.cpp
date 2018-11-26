@@ -1,40 +1,27 @@
-//
-// Created by navid-fkh on 11/23/18.
-//
-#include "User.h"
-#include "Content.h"
+#include "Database.h"
+using namespace sqlite;
+
+void init(){
+    database db("dbfile.db");
+    db << "create table user ("
+          "_id integer primary key autoincrement not null,"
+          "username text,"
+          "email text,"
+          "hash_pass text,"
+          "type text"
+          ");";
+    db << "create table content ("
+          "_id integer primary key autoincrement not null,"
+          "body text,"
+          "user_id integer,"
+          "type text,"
+          "visits integer"
+          ");";
+    db << "create table ContentRelation ("
+          "source_id integer,"
+          "destination_id integer,"
+          "type text"
+          ");";
 
 
-#include "sqlite_orm.h"
-using namespace sqlite_orm;
-
-void init() {
-    auto storage = make_storage("db.sqlite",
-                                make_table("USER",
-                                           make_column("pass_hash", &User::pass_hash,default_value(0)),
-                                           make_column("username", &User::username)
-//                                           make_column("email", &User::email),
-//                                           make_column("type", &User::type)
-                                ),
-                                make_table("Content",
-                                           make_column("body", &Content::body),
-                                           make_column("type", &Content::type),
-                                           make_column("visits", &Content::visits)
-                                ),
-                                make_table("ContentRelation",
-//                                           make_column("body", &ContentRelation::source),
-                                           make_column("type", &ContentRelation::type)
-//                                           make_column("destination", &ContentRelation::destination)
-                                ));
-    storage.sync_schema();
-    string uname = string("navid");
-    string upass = string("123");
-    string uemail = string("navid@gmail.com");
-    User Navid{
-        uname,
-        upass,
-        uemail,
-        UserType::ADMIN
-    };
-    storage.insert(Navid);
 }

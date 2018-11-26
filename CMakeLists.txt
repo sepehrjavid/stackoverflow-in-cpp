@@ -1,95 +1,24 @@
 cmake_minimum_required(VERSION 3.12)
-project(stackoverflow_in_cpp2)
+project(stackoverflow_in_cpp3)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
-include_directories(sqlite_orm)
-include_directories(sqlite_orm/dev)
-include_directories(sqlite_orm/include)
-include_directories(sqlite_orm/include/sqlite_orm)
-include_directories(sqlite_orm/tests)
+include_directories(hdr)
+include_directories(hdr/sqlite_modern_cpp)
+include_directories(hdr/sqlite_modern_cpp/lists)
+include_directories(hdr/sqlite_modern_cpp/utility)
 
-add_executable(stackoverflow_in_cpp2
-        sqlite_orm/dev/aggregate_functions.h
-        sqlite_orm/dev/alias.h
-        sqlite_orm/dev/arithmetic_tag.h
-        sqlite_orm/dev/collate_argument.h
-        sqlite_orm/dev/column.h
-        sqlite_orm/dev/column_result.h
-        sqlite_orm/dev/conditions.h
-        sqlite_orm/dev/constraints.h
-        sqlite_orm/dev/core_functions.h
-        sqlite_orm/dev/database_connection.h
-        sqlite_orm/dev/default_value_extractor.h
-        sqlite_orm/dev/error_code.h
-        sqlite_orm/dev/field_printer.h
-        sqlite_orm/dev/finish_macros.h
-        sqlite_orm/dev/index.h
-        sqlite_orm/dev/is_std_ptr.h
-        sqlite_orm/dev/join_iterator.h
-        sqlite_orm/dev/mapped_type_proxy.h
-        sqlite_orm/dev/operators.h
-        sqlite_orm/dev/row_extractor.h
-        sqlite_orm/dev/rowid.h
-        sqlite_orm/dev/select_constraints.h
-        sqlite_orm/dev/sqlite_type.h
-        sqlite_orm/dev/start_macros.h
-        sqlite_orm/dev/statement_binder.h
-        sqlite_orm/dev/statement_finalizer.h
-        sqlite_orm/dev/static_magic.h
-        sqlite_orm/dev/storage.h
-        sqlite_orm/dev/storage_impl.h
-        sqlite_orm/dev/sync_schema_result.h
-        sqlite_orm/dev/table.h
-        sqlite_orm/dev/table_impl.h
-        sqlite_orm/dev/table_info.h
-        sqlite_orm/dev/table_type.h
-        sqlite_orm/dev/transaction_guard.h
-        sqlite_orm/dev/tuple_helper.h
-        sqlite_orm/dev/type_is_nullable.h
-        sqlite_orm/dev/type_printer.h
-        sqlite_orm/dev/typed_comparator.h
-        sqlite_orm/examples/blob.cpp
-        sqlite_orm/examples/collate.cpp
-        sqlite_orm/examples/composite_key.cpp
-        sqlite_orm/examples/core_functions.cpp
-        sqlite_orm/examples/cross_join.cpp
-        sqlite_orm/examples/date_time.cpp
-        sqlite_orm/examples/distinct.cpp
-        sqlite_orm/examples/enum_binding.cpp
-        sqlite_orm/examples/foreign_key.cpp
-        sqlite_orm/examples/group_by.cpp
-        sqlite_orm/examples/in_memory.cpp
-        sqlite_orm/examples/index.cpp
-        sqlite_orm/examples/insert.cpp
-        sqlite_orm/examples/iteration.cpp
-        sqlite_orm/examples/key_value.cpp
-        sqlite_orm/examples/left_and_inner_join.cpp
-        sqlite_orm/examples/multi_table_select.cpp
-        sqlite_orm/examples/natural_join.cpp
-        sqlite_orm/examples/nullable_enum_binding.cpp
-        sqlite_orm/examples/private_class_members.cpp
-        sqlite_orm/examples/select.cpp
-        sqlite_orm/examples/self_join.cpp
-        sqlite_orm/examples/subentities.cpp
-        sqlite_orm/examples/synchronous.cpp
-        sqlite_orm/examples/union.cpp
-        sqlite_orm/examples/unique.cpp
-        sqlite_orm/examples/update.cpp
-        sqlite_orm/include/sqlite_orm/sqlite_orm.h
-        sqlite_orm/tests/static_tests.cpp
-        sqlite_orm/tests/tests.cpp
-        sqlite_orm/third_party/amalgamate/amalgamate.py
-        sqlite_orm/third_party/amalgamate/CHANGES.md
-        sqlite_orm/third_party/amalgamate/config.json
-        sqlite_orm/third_party/amalgamate/LICENSE.md
-        sqlite_orm/third_party/amalgamate/README.md
-        sqlite_orm/_config.yml
-        sqlite_orm/LICENSE
-        sqlite_orm/logo.png
-        sqlite_orm/README.md
-        sqlite_orm/TODO.md
+add_executable(stackoverflow_in_cpp3
+        hdr/sqlite_modern_cpp/lists/error_codes.h
+        hdr/sqlite_modern_cpp/utility/function_traits.h
+        hdr/sqlite_modern_cpp/utility/uncaught_exceptions.h
+        hdr/sqlite_modern_cpp/utility/utf16_utf8.h
+        hdr/sqlite_modern_cpp/utility/variant.h
+        hdr/sqlite_modern_cpp/errors.h
+        hdr/sqlite_modern_cpp/log.h
+        hdr/sqlite_modern_cpp/sqlcipher.h
+        hdr/sqlite_modern_cpp.h
         AbstractUser.h
         Content.cpp
         Content.h
@@ -102,6 +31,7 @@ add_executable(stackoverflow_in_cpp2
         Logger.h
         main.cpp
         README.md
-        sqlite_orm.h
         User.cpp
         User.h)
+
+target_link_libraries(stackoverflow_in_cpp3 LINK_PUBLIC sqlite3)

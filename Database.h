@@ -3,7 +3,7 @@
 #include "User.h"
 #include "Content.h"
 
-#include "sqlite_orm.h"
-using namespace sqlite_orm;
+#include <sqlite_modern_cpp.h>
 
 void init();
+

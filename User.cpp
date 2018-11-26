@@ -137,3 +137,11 @@ void User::get_my_content(int ind) {
         contents[ind]->print_answers();
     }
 }
+
+fstream& User::to_string(fstream &out){
+    out << this->email << " " << this->username << endl;
+    return out;
+}
+fstream& operator << (fstream &out,User a){
+    return a.to_string(out);
+}

@@ -17,7 +17,6 @@ public:
     void printLogs();
     void log(std::string lg);
     std::vector<std::string>& getLogs ();
-//    fstream operator << (string);
 
 private:
     Logger();

@@ -54,8 +54,6 @@ std::vector<std::string>& Logger::getLogs() {
     return this->logs;
 }
 
-//fstream Logger::operator << (fstream &out, string str){
-//    return out;
-//}
+
 
 

@@ -6,12 +6,14 @@
 
 class User : public AbstractUser {
 public:
+    friend fstream& operator << (fstream,User a);
     User(string username, string password, string email, UserType type);
 
     static void init(const string &salt);
 
 public:
     void set_password(string password);
+    fstream& to_string(fstream& out);
     bool check_password(string password);
 
 public:
