@@ -23,3 +23,55 @@ void init(){
           "type text"
           ");";
 }
+
+
+void create_content(std::string body, std::string type, std::string username, std::string reply){
+      if (type  == "QUESTION"){
+            int user_id = 1;
+            db << "insert into content (body, type, visits, user_id) values (?,?,?,?);"
+               << body
+               << type
+               << 0
+               << user_id;
+      } else if (type == "ANSWER"){
+
+      }
+}
+
+void insert(string table,int n, ... ){
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void create_content(std::string body, std::string type, std::string username, std::string reply){
+    if (type  == "QUESTION"){
+        int user_id = 1;
+        db << "insert into content (body, type, visits, user_id) values (?,?,?,?);"
+           << body
+           << type
+           << 0
+           << user_id;
+    } else if (type == "ANSWER"){
+
+    }
+}
+
+
+
+

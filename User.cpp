@@ -7,6 +7,7 @@
 #include <vector>
 #include "Content.h"
 #include "Logger.h"
+#include "Database.h"
 
 vector<User> User::users;
 string User::salt;
@@ -99,6 +100,7 @@ void User::init(const string &salt) {
 void User::add_question(string body){
     Content* cp = new Content(body, QUESTION);
     contents.push_back(cp);
+    create_content(body , "QUESTION", username);
 }
 
 void User::add_answer(string body, Content &q){

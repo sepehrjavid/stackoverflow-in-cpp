@@ -1,15 +1,21 @@
 cmake_minimum_required(VERSION 3.12)
-project(stackoverflow_in_cpp3)
+project(stackoverflow_in_cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
+include_directories(cmake-build-debug)
 include_directories(hdr)
 include_directories(hdr/sqlite_modern_cpp)
 include_directories(hdr/sqlite_modern_cpp/lists)
 include_directories(hdr/sqlite_modern_cpp/utility)
 
-add_executable(stackoverflow_in_cpp3
+add_executable(stackoverflow_in_cpp
+        cmake-build-debug/cmake_install.cmake
+        cmake-build-debug/CMakeCache.txt
+        cmake-build-debug/Makefile
+        cmake-build-debug/stackoverflow_in_cpp.cbp
+        cmake-build-debug/stackoverflow_in_cpp3.cbp
         hdr/sqlite_modern_cpp/lists/error_codes.h
         hdr/sqlite_modern_cpp/utility/function_traits.h
         hdr/sqlite_modern_cpp/utility/uncaught_exceptions.h
@@ -36,4 +42,4 @@ add_executable(stackoverflow_in_cpp3
         User.h)
 
 
-target_link_libraries(stackoverflow_in_cpp3 LINK_PUBLIC sqlite3)
+target_link_libraries(stackoverflow_in_cpp LINK_PUBLIC sqlite3)

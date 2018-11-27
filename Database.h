@@ -7,3 +7,4 @@
 
 void init();
 
+void create_content(std::string body, std::string type, std::string username, std::string reply = "");
