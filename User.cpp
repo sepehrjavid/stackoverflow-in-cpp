@@ -85,8 +85,12 @@ User& User::signup(string username, string password, string email){
             throw EmailAlreadyExistsException();
         }
     }
-    //Create user
     users.emplace_back(username, password, email, UserType::MEMBER);
+    hash<string> temp;
+    size_t ps = temp(password + salt);
+    stringstream out;
+    out << ps;
+    create_user(username, email, "MEMBER", out.str());
     return users[users.size() - 1];
 }
 

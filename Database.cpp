@@ -25,43 +25,13 @@ void init(){
 }
 
 
-void create_content(std::string body, std::string type, std::string username, std::string reply){
-      if (type  == "QUESTION"){
-            int user_id = 1;
-            db << "insert into content (body, type, visits, user_id) values (?,?,?,?);"
-               << body
-               << type
-               << 0
-               << user_id;
-      } else if (type == "ANSWER"){
-
-      }
-}
-
-void insert(string table,int n, ... ){
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void create_content(std::string body, std::string type, std::string username, std::string reply){
+int create_content(std::string body, std::string type, std::string username, std::string reply){
+    int user_id;
     if (type  == "QUESTION"){
-        int user_id = 1;
+        db << "select _id from User where username = ?;"
+            << username
+            >> user_id;
+        cout << user_id <<endl;
         db << "insert into content (body, type, visits, user_id) values (?,?,?,?);"
            << body
            << type
@@ -70,6 +40,16 @@ void create_content(std::string body, std::string type, std::string username, st
     } else if (type == "ANSWER"){
 
     }
+    return db.last_insert_rowid();
+}
+
+int create_user(std::string username, std::string email, std::string type, std::string hash_pass){
+    db << "insert into User (username, email, type, hash_pass) values (?,?,?,?);"
+        << username
+        << email
+        << type
+        << hash_pass;
+    return db.last_insert_rowid();
 }
 
 
