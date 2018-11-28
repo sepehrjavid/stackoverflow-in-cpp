@@ -77,13 +77,11 @@ void User::log_user(string username){
 }
 
 User& User::signup(string username, string password, string email){
-    for (auto &user : users) {
-        if (user.username == username) {
-            throw UsernameAlreadyExistsException();
-        }
-        else if (user.email == email) {
-            throw EmailAlreadyExistsException();
-        }
+    if (query_user(username) != 0) {
+        throw UsernameAlreadyExistsException();
+    }
+    else if (query_user("", email) != 0) {
+        throw EmailAlreadyExistsException();
     }
     users.emplace_back(username, password, email, UserType::MEMBER);
     hash<string> temp;

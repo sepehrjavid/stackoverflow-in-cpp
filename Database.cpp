@@ -28,10 +28,7 @@ void init(){
 int create_content(std::string body, std::string type, std::string username, std::string reply){
     int user_id;
     if (type  == "QUESTION"){
-        db << "select _id from User where username = ?;"
-            << username
-            >> user_id;
-        cout << user_id <<endl;
+        user_id = query_user(username);
         db << "insert into content (body, type, visits, user_id) values (?,?,?,?);"
            << body
            << type
@@ -50,6 +47,29 @@ int create_user(std::string username, std::string email, std::string type, std::
         << type
         << hash_pass;
     return db.last_insert_rowid();
+}
+
+int query_user(std::string username, std::string email){
+    int count;
+    if (email == ""){
+        db << "select count(*) from User where username = ?;"<< username >> count;
+        if (count == 0){
+            return count;
+        }
+        db << "select _id from User where username = ?;"
+           << username
+           >> count;
+    }
+    if (username == ""){
+        db << "select count(*) from User where email = ?;"<< email >> count;
+        if (count == 0){
+            return count;
+        }
+        db << "select _id from User where email = ?;"
+           << email
+           >> count;
+    }
+    return  count;
 }
 
 
