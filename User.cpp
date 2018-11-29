@@ -12,6 +12,8 @@
 vector<User> User::users;
 string User::salt;
 
+extern sqlite::database db;
+
 User::User(string username, string password, string email, UserType type){
 //    lower(username);
     this->username = username;
@@ -35,8 +37,15 @@ bool User::check_password(string password){
 }
 
 bool User::authenticate(string username, string password){
-//    lower(username);
-    return this->username == username and check_password(password);
+    int id = query_user(username);
+    if (id == 0){
+        return false;
+    }
+    std::string pass, email1;
+    db << "select hash_pass, email from User where _id = ?;"<<id>>tie(pass, email1);
+    User* usr = new User(username, " ",email1, UserType::MEMBER);
+    usr->password = pass;
+    return usr->check_password(password);
 }
 void User::deleteAccount(){
     if (this->type == UserType::ADMIN) {
@@ -52,9 +61,14 @@ void User::deleteAccount(){
 }
 
 User& User::login(string username, string password){
-    for (auto &user : users) {
-        if(user.authenticate(username, password)) {
-            return user;
+    if(authenticate(username, password)) {
+        std::string email1, type;
+        db << "select email, type from User where username = ?;"<<username>>tie(email1, type);
+        if (type == "MEMBER"){
+            return *(new User(username, password, email1, UserType::MEMBER));
+        }
+        else{
+            return *(new User(username, password, email1, UserType::ADMIN));
         }
     }
     throw WrongUsernameOrPasswordException();

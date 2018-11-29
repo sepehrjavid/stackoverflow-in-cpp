@@ -17,7 +17,7 @@ public:
     bool check_password(string password);
 
 public:
-    bool authenticate(string username, string password);
+    static bool authenticate(string username, string password);
     void deleteAccount();
     void add_question(string body);
     void add_answer(string body, Content &question);

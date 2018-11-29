@@ -16,7 +16,6 @@ enum UserType {
 class AbstractUser{
 public:
     hash<string> pass_hash;
-    virtual bool authenticate(string username, string password) = 0;
     virtual void deleteAccount() = 0;
     string username;
     vector<Content*> contents;      //content pointer used to make sure that if the content is edited by a method in content class, the content in the vector is also edited
