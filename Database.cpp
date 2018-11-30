@@ -101,10 +101,9 @@ void query_content(std::string text, vector<Content>& fill){
 int query_content(std::string body){
     int id;
     try{
-        db << "select count(*) form Content where body = ?;"
+        db << "select _id from Content where body = ?;"
            <<body
            >>id;
-        cout<<id<<endl;
     }
     catch (exception& e){
         cout << e.what() << endl;
