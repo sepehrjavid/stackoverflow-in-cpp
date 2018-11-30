@@ -117,6 +117,22 @@ void update_content(std::string body, int new_visit){
     <<body;
 }
 
+void Edit_content(string old_B,int vis , ContentType typee, string new_B){
+    string tt;
+    int needed_id;
+    if(typee==ContentType::QUESTION){tt="QUESTION";}
+    if(typee==ContentType::ANSWER){tt="ANSWER";}
+    db << "select _id from Content where body = ? and visits = ? and type = ?;"
+       << old_B
+       << vis
+       << tt
+       >> [&](int source_id){
+           needed_id = source_id;
+    };
+    db << "update Content set body = ? where _id = ? ;"
+       << new_B
+       << needed_id;
+}
 
 void get_answers(int id, vector<Content>& out){
     vector<int> temp;

@@ -25,8 +25,10 @@ void Content::add_relation(ContentRelationType type, Content &dest){
 }
 
 
-void Content::edit_content(std::string body) {
+void Content::edit_content(std::string bodyy) {
+    Edit_content(this->body, this->visits, this->type , bodyy);
     this->body = body;
+
 }
 
 void Content::print_answers() {
