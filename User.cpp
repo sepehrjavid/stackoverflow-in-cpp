@@ -81,7 +81,7 @@ void User::log_user(string username){
     char buffer[80];
     time (&rawtime);
     timeinfo = localtime(&rawtime);
-    strftime(buffer,sizeof(buffer),"%d-%m-%Y %H:%M:%S",timeinfo);
+    strftime(buffer,sizeof(buffer),"%d-%m-%Y %H:%M:%S\n",timeinfo);
     std::string strr(buffer);
     const char *usg = username.c_str();
     const char *emg = this->email.c_str();

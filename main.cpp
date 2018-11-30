@@ -23,7 +23,14 @@ enum MenuState {
 };
 
 int main() {
-    init();
+    FILE* datafil = fopen("datfile.txt","r");
+    if(!datafil){
+        FILE* datafile = fopen("datfile.txt","a");
+        fseek(datafile, 0, SEEK_SET);
+        fprintf(datafile,"%d", 1);
+        fclose(datafile);
+        init();
+    }
     User::init("SECRET_KEY");
     User * loggedInUser = nullptr;
     MenuState menuState = MenuState::START;

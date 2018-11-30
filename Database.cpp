@@ -73,5 +73,39 @@ int query_user(std::string username, std::string email){
 }
 
 
+int Create_CR(Content* destination, Content* source ,ContentRelationType type){
+    int a1,a2;
+    string tt;
+    if(type==ContentRelationType::ANSWER_TO){tt="ANSWER_TO";}
+    if(type==ContentRelationType::DUPLICTE_OF){tt="DUPLICTE_OF";}
+    db << "select _id from Content where body=? and visits=?  ;"
+       << source->body << source->visits
+       >> [&](int _id) { a1 = _id; };
+    db << "select _id from Content where body=? and visits=?  ;"
+       <<destination->body << destination->visits
+       >> [&](int _id) { a2 = _id; };
+    db << "insert into ContentRelation (type,destination_id,source_id) values (?,?,?);"
+       << tt
+       << a2
+       << a1;
+    return db.last_insert_rowid();
+}
+int Delete_CR(Content* destination, Content* source ,ContentRelationType type){
+    int a1,a2;
+    string tt;
+    if(type==ContentRelationType::ANSWER_TO){tt="ANSWER_TO";}
+    if(type==ContentRelationType::DUPLICTE_OF){tt="DUPLICTE_OF";}
+    db << "select _id from Content where body=? and visits=?  ;"
+       << source->body << source->visits
+       >> [&](int _id) { a1 = _id; };
+    db << "select _id from Content where body=? and visits=?  ;"
+       <<destination->body << destination->visits
+       >> [&](int _id) { a2 = _id; };
+    db << "DELETE from ContentRelation where type = ? and destination_id = ? and source_id = ?;"
+        << tt
+        << a2
+        << a1;
+    return 0;
+}
 
 

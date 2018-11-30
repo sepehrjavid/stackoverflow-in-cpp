@@ -13,3 +13,6 @@ int create_user(std::string username, std::string email, std::string type, std::
 
 int query_user(std::string username, std::string email = "");
 
+int Create_CR(Content* destination, Content* source ,ContentRelationType type);
+
+int Delete_CR(Content* destination, Content* source ,ContentRelationType type);
