@@ -4,6 +4,8 @@
 #include "Database.h"
 
 
+
+
 using namespace std;
 
 
@@ -67,26 +69,14 @@ void Content::print_content(){
     }
 }
 
-ContentRelation::ContentRelation(Content* destination, Content* source ,ContentRelationType type) {
+//ContentRelation::ContentRelation(Content* destination, Content* source ,ContentRelationType type)
+ContentRelation::ContentRelation(Content* destination, Content* source ,ContentRelationType typee) {
     this->destination = destination;
     this->source = source;
-    this->type = type;
-    string tt;
-    if(type==ContentRelationType::ANSWER_TO){tt="ANSWER_TO";}
-    if(type==ContentRelationType::DUPLICTE_OF){tt="DUPLICTE_OF";}
-    int a1,a2;
-//    database db("dbfile.db");
-//    db << "select _id from Content where body=? and visits=?  ;"
-//       << source->body << source->visits
-//       >> [&](int _id) { a1 = _id; };
-//    db << "select _id from Content where body=? and visits=?  ;"
-//       <<destination->body << destination->visits
-//       >> [&](int _id) { a2 = _id; };
-//    db << "insert into ContentRelation (type,destination_id,source_id) values (?,?,?);"
-//       << tt
-//       << a2
-//       << a1;
+    this->type = typee;
+    Create_CR(destination, source, typee);
 }
+
 ContentRelation::~ContentRelation() {
     vector<ContentRelation*> *c1 = &(this->destination->relations);
     for (auto i = c1->begin(); i < c1->end(); i++) {
@@ -100,8 +90,6 @@ ContentRelation::~ContentRelation() {
             c1->erase(i);
         }
     }
-//    database db("dbfile.db");
-//    db << "delete _id from user where body=? and visits=?  ;"
-//       << source->body << source->visits
+    Delete_CR(this->destination,this->source,this->type);
 
 }

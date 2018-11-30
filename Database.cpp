@@ -100,11 +100,11 @@ void query_content(std::string text, vector<Content>& fill){
 
 int query_content(std::string body){
     int id;
-    cout<<body<<"2"<<endl;
     try{
-        db << "select _id form Content where body = ?;"
+        db << "select count(*) form Content where body = ?;"
            <<body
            >>id;
+        cout<<id<<endl;
     }
     catch (exception& e){
         cout << e.what() << endl;
@@ -150,5 +150,39 @@ void get_answers(int id, vector<Content>& out){
     }
 }
 
+int Create_CR(Content* destination, Content* source ,ContentRelationType type){
+    int a1,a2;
+    string tt;
+    if(type==ContentRelationType::ANSWER_TO){tt="ANSWER_TO";}
+    if(type==ContentRelationType::DUPLICTE_OF){tt="DUPLICTE_OF";}
+    db << "select _id from Content where body=? and visits=?  ;"
+       << source->body << source->visits
+       >> [&](int _id) { a1 = _id; };
+    db << "select _id from Content where body=? and visits=?  ;"
+       <<destination->body << destination->visits
+       >> [&](int _id) { a2 = _id; };
+    db << "insert into ContentRelation (type,destination_id,source_id) values (?,?,?);"
+       << tt
+       << a2
+       << a1;
+    return db.last_insert_rowid();
+}
+int Delete_CR(Content* destination, Content* source ,ContentRelationType type){
+    int a1,a2;
+    string tt;
+    if(type==ContentRelationType::ANSWER_TO){tt="ANSWER_TO";}
+    if(type==ContentRelationType::DUPLICTE_OF){tt="DUPLICTE_OF";}
+    db << "select _id from Content where body=? and visits=?  ;"
+       << source->body << source->visits
+       >> [&](int _id) { a1 = _id; };
+    db << "select _id from Content where body=? and visits=?  ;"
+       <<destination->body << destination->visits
+       >> [&](int _id) { a2 = _id; };
+    db << "DELETE from ContentRelation where type = ? and destination_id = ? and source_id = ?;"
+        << tt
+        << a2
+        << a1;
+    return 0;
+}
 
 

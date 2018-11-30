@@ -22,3 +22,8 @@ int query_content(std::string body);
 void update_content(std::string body, int new_visit);
 
 void get_answers(int id, vector<Content>& out);
+
+int Create_CR(Content* destination, Content* source ,ContentRelationType type);
+
+int Delete_CR(Content* destination, Content* source ,ContentRelationType type);
+
