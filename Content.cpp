@@ -1,16 +1,13 @@
 #include "Content.h"
 #include <iostream>
 #include <vector>
-
-#include <sqlite_modern_cpp.h>
-using namespace sqlite;
+#include "Database.h"
 
 
 using namespace std;
 
-Content::Content(std::string body, ContentType type):body(body), type(type){
-    this->visits = 0;
-}
+
+Content::Content(std::string body, ContentType type, int visits):body(body), type(type), visits(visits){}
 
 Content::~Content() {
     int end = relations.size();
@@ -37,6 +34,37 @@ void Content::print_answers() {
         }
     }
     cout<<"\n\n";
+}
+
+
+std::vector<Content> Content::content_search(std::string query){
+    vector<Content> out;
+    query_content(query, out);
+    return out;
+}
+
+
+void Content::print_content(){
+    if (type == ContentType::QUESTION){
+        update_content(body, visits+1);
+        cout<<body<<endl<<endl<<"visits = "<<visits<<endl;
+        vector<Content> ans;
+        int pk = query_content(body);
+        get_answers(pk, ans);
+        cout << "-------------------answers-----------------------"<<endl;
+        if (ans.size() == 0){
+            cout<<"No answers for this question yet"<<endl;
+            return;
+        }
+        for(int i = 0; i<ans.size();i++){
+            ans[i].print_content();
+        }
+    }
+    else if (type == ContentType::ANSWER){
+        update_content(body, visits+1);
+        cout<<body<<endl<<endl<<"visits = "<<visits<<endl
+        <<"-------------------------------------------------"<<endl;
+    }
 }
 
 ContentRelation::ContentRelation(Content* destination, Content* source ,ContentRelationType type) {

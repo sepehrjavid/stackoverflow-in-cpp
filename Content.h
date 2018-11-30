@@ -27,10 +27,12 @@ public:
     ContentType type;
     int visits;
     std::vector<ContentRelation*> relations;
-    Content(std::string body, ContentType type);
+    Content(std::string body, ContentType type, int visits = 0);
     ~Content();
     void add_relation(ContentRelationType type, Content &dest);
     void edit_content(std::string body);
     static std::vector<Content> search(std::string query);
     void print_answers();
+    static std::vector<Content> content_search(std::string query);
+    void print_content();
 };

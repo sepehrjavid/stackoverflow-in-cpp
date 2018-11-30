@@ -1,5 +1,4 @@
 #include <utility>
-
 #include <sstream>
 #include "User.h"
 #include "Exceptions.h"
@@ -58,6 +57,7 @@ void User::deleteAccount(){
             break;
         }
     }
+    delete_user(username);
 }
 
 User& User::login(string username, string password){
@@ -97,19 +97,17 @@ User& User::signup(string username, string password, string email){
     else if (query_user("", email) != 0) {
         throw EmailAlreadyExistsException();
     }
-    users.emplace_back(username, password, email, UserType::MEMBER);
-    hash<string> temp;
-    size_t ps = temp(password + salt);
-    stringstream out;
-    out << ps;
-    create_user(username, email, "MEMBER", out.str());
-    return users[users.size() - 1];
+    User* usr = new User(username, "", email, UserType::MEMBER);
+    usr->set_password(password);
+    create_user(username, email, "MEMBER", usr->password);
+    return *usr;
 }
 
 void User::init(const string &salt) {
     User::salt = salt;
     users.reserve(20);
-    users.emplace_back("admin", "admin", "admin@stackoverflow.com", UserType::ADMIN);
+    User * usr = new User("admin", "admin", "admin@stackoverflow.com", UserType::ADMIN);
+    create_user("admin", "admin@stackoverflow.com", "ADMIN", usr->password);
 }
 
 

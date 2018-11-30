@@ -5,6 +5,7 @@
 #include "Exceptions.h"
 #include "User.h"
 #include "Database.h"
+#include "Content.h"
 
 #ifdef _WIN32
 #define CLEAR "cls"
@@ -19,6 +20,7 @@ enum MenuState {
     START,
     LOGGED_IN,
     MY_CONTENT,
+    SEARCH,
     END
 };
 
@@ -27,6 +29,7 @@ int main() {
     User::init("SECRET_KEY");
     User * loggedInUser = nullptr;
     MenuState menuState = MenuState::START;
+    vector<Content> buff;
     string last_message;
     string user_text;
     int ind = 0;
@@ -94,7 +97,7 @@ int main() {
                 cout << "d.delete account\nl. logout\nq. add question\ns. search a question\nm. my content\ne. exit\n";
                 cin >> choice;
                 switch (choice) {
-                    case 'd': {
+                    case 'd': {          //delete account
                         try {
                             loggedInUser->deleteAccount();
                             cout << "Account successfully deleted\n";
@@ -118,16 +121,24 @@ int main() {
                     }
                     case 'q': { //add question
                         cout<<"Please enter your question:"<<endl;
-                        //getline(cin,user_text);                           //TODO find a better way to get a line including spaces
-                        cin>>user_text;
+                        getchar();
+                        getline(cin,user_text);
                         loggedInUser->add_question(user_text);
                         last_message = "your question was successfully uploaded\n";
                         break;
                     }
-                    case 's': {
+                    case 's': {   //search for question
                         cout<<"search here:"<<endl;
-                        cin>> user_text;
-                        // a search
+                        getchar();
+                        getline(cin, user_text);
+                        buff = Content::content_search(user_text);
+                        if (buff.size() == 0){
+                            cout<<"no match!"<<endl;
+                        }
+                        else{
+                            menuState = MenuState::SEARCH;
+                            ind = 0;
+                        }
                         break;
                     }
                     case 'm': {
@@ -192,6 +203,26 @@ int main() {
                     case 'b':{
                         ind = 0;
                         menuState = MenuState::LOGGED_IN;
+                        break;
+                    }
+                }
+                break;
+            }
+            case MenuState::SEARCH:{
+                buff[ind].print_content();
+                cout<<endl<<"r.reply\nn.next\nprevious\nb.back"<<endl;
+                cin>>choice;
+                switch (choice){
+                    case ('n'):{
+                        break;
+                    }
+                    case ('p'):{
+                        break;
+                    }
+                    case ('r'):{
+                        break;
+                    }
+                    case ('b'):{
                         break;
                     }
                 }

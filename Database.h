@@ -13,3 +13,12 @@ int create_user(std::string username, std::string email, std::string type, std::
 
 int query_user(std::string username, std::string email = "");
 
+void delete_user(std::string username);
+
+void query_content(std::string body, vector<Content>& fill);
+
+int query_content(std::string body);
+
+void update_content(std::string body, int new_visit);
+
+void get_answers(int id, vector<Content>& out);
