@@ -31,6 +31,7 @@ public:
     ~Content();
     void add_relation(ContentRelationType type, Content &dest);
     void edit_content(std::string body);
+    void del_content();
     static std::vector<Content> search(std::string query);
     void print_answers();
     static std::vector<Content> content_search(std::string query);

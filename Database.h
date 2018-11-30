@@ -25,6 +25,8 @@ void update_content(std::string body, int new_visit);
 
 void Edit_content(string old_B,int vis , ContentType typee, string new_B);
 
+void Delete_content(string old_B,int vis , ContentType typee);
+
 void get_answers(int id, vector<Content>& out);
 
 int Create_CR(Content* destination, Content* source ,ContentRelationType type);

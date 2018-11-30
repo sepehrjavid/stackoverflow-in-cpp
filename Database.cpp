@@ -119,18 +119,30 @@ void update_content(std::string body, int new_visit){
 
 void Edit_content(string old_B,int vis , ContentType typee, string new_B){
     string tt;
-    int needed_id;
+    int needed_id=0;
     if(typee==ContentType::QUESTION){tt="QUESTION";}
     if(typee==ContentType::ANSWER){tt="ANSWER";}
     db << "select _id from Content where body = ? and visits = ? and type = ?;"
        << old_B
        << vis
        << tt
-       >> [&](int source_id){
-           needed_id = source_id;
-    };
+       >> needed_id ;
     db << "update Content set body = ? where _id = ? ;"
        << new_B
+       << needed_id;
+}
+
+void Delete_content(string old_B,int vis , ContentType typee){
+    string tt;
+    int needed_id=0;
+    if(typee==ContentType::QUESTION){tt="QUESTION";}
+    if(typee==ContentType::ANSWER){tt="ANSWER";}
+    db << "select _id from Content where body = ? and visits = ? and type = ?;"
+       << old_B
+       << vis
+       << tt
+       >> needed_id ;
+    db << "delete from Content where _id = ? ;"
        << needed_id;
 }
 
@@ -172,10 +184,10 @@ int Create_CR(Content* destination, Content* source ,ContentRelationType type){
     if(type==ContentRelationType::DUPLICTE_OF){tt="DUPLICTE_OF";}
     db << "select _id from Content where body=? and visits=?  ;"
        << source->body << source->visits
-       >> [&](int _id) { a1 = _id; };
+       >> a1 ;
     db << "select _id from Content where body=? and visits=?  ;"
        <<destination->body << destination->visits
-       >> [&](int _id) { a2 = _id; };
+       >> a2 ;
     db << "insert into ContentRelation (type,destination_id,source_id) values (?,?,?);"
        << tt
        << a2
@@ -189,10 +201,10 @@ int Delete_CR(Content* destination, Content* source ,ContentRelationType type){
     if(type==ContentRelationType::DUPLICTE_OF){tt="DUPLICTE_OF";}
     db << "select _id from Content where body=? and visits=?  ;"
        << source->body << source->visits
-       >> [&](int _id) { a1 = _id; };
+       >> a1 ;
     db << "select _id from Content where body=? and visits=?  ;"
        <<destination->body << destination->visits
-       >> [&](int _id) { a2 = _id; };
+       >> a2 ;
     db << "DELETE from ContentRelation where type = ? and destination_id = ? and source_id = ?;"
         << tt
         << a2

@@ -26,9 +26,12 @@ void Content::add_relation(ContentRelationType type, Content &dest){
 
 
 void Content::edit_content(std::string bodyy) {
-    Edit_content(this->body, this->visits, this->type , bodyy);
+    Edit_content(this->body, this->visits+1, this->type , bodyy);
     this->body = body;
+}
 
+void Content::del_content(){
+    Delete_content(this->body, this->visits+1, this->type);
 }
 
 void Content::print_answers() {

@@ -39,6 +39,7 @@ int main() {
     vector<Content> buff;
     string last_message;
     string user_text;
+    string user_text2;
     int ind = 0;
     char choice;
     while(menuState != MenuState::END) {
@@ -191,11 +192,24 @@ int main() {
                         break;
                     }
                     case 'd': {
-
+                        cout << "\n Are you sure you want to delete this e?(yes/no)" << endl;
+                        string sure;
+                        cin >> sure;
+                        if(sure == "yes") {
+                            Content con = buff[ind];
+                            con.del_content();
+                        }
+                        else{
+                            cout << "ok !" << endl;
+                        }
                         break;
                     }
                     case 'e':{
-
+                        Content con = buff[ind];
+                        cout<<"Please enter new text to replace "<<endl;
+                        getchar();
+                        getline(cin,user_text2);
+                        con.edit_content(user_text2);
                         break;
                     }
                     case 'b':{
