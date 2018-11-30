@@ -34,5 +34,6 @@ public:
     static std::vector<Content> search(std::string query);
     void print_answers();
     static std::vector<Content> content_search(std::string query);
+    static std::vector<Content> my_content(std::string username);
     void print_content();
 };
