@@ -46,6 +46,12 @@ std::vector<Content> Content::content_search(std::string query){
 }
 
 
+std::vector<Content> Content::my_content(std::string username){
+    vector<Content> out;
+    query_content_with_username(username, out);
+    return out;
+}
+
 void Content::print_content(){
     if (type == ContentType::QUESTION){
         update_content(body, visits+1);

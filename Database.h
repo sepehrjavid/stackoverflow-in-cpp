@@ -19,6 +19,8 @@ void query_content(std::string body, vector<Content>& fill);
 
 int query_content(std::string body);
 
+void query_content_with_username(std::string username, vector<Content>& fill);
+
 void update_content(std::string body, int new_visit);
 
 void get_answers(int id, vector<Content>& out);
@@ -26,4 +28,5 @@ void get_answers(int id, vector<Content>& out);
 int Create_CR(Content* destination, Content* source ,ContentRelationType type);
 
 int Delete_CR(Content* destination, Content* source ,ContentRelationType type);
+
 

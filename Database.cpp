@@ -185,3 +185,22 @@ int Delete_CR(Content* destination, Content* source ,ContentRelationType type){
 }
 
 
+void query_content_with_username(std::string username, vector<Content>& fill){
+    int user_id = query_user(username);
+    try{
+        db << "select visits, type, body from Content where user_id = ?;"
+        <<user_id
+        >>[&] (int visits, std::string type, std::string body){
+            if (type == "QUESTION"){
+                fill.emplace_back(body, ContentType::QUESTION, visits);
+            }
+            else{
+                fill.emplace_back(body, ContentType::ANSWER, visits);
+            }
+        };
+    }
+    catch (exception& e){
+        cout << e.what() << endl;
+    }
+}
+

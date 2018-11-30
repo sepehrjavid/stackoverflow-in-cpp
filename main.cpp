@@ -149,13 +149,13 @@ int main() {
                         break;
                     }
                     case 'm': {
-                        if (loggedInUser->contents.size() == 0){
-                            last_message = "you don't have any contents yet\n";
+                        buff = Content::my_content(loggedInUser->username);
+                        if (buff.size() == 0){
+                            cout<<"you have no contents yet"<<endl;
                         }
-                        else {
-                            system(CLEAR);
-                            loggedInUser->get_my_content(ind);
+                        else{
                             menuState = MenuState::MY_CONTENT;
+                            ind = 0;
                         }
                         break;
                     }
@@ -167,49 +167,41 @@ int main() {
                 break;
             }
             case MenuState ::MY_CONTENT:{
-                cout<<"n. next\np. previous\nd. delete content\ne. edit content\nb. back"<<endl;
+                cout<<"___________________________________________________________"<<endl;
+                buff[ind].print_content();
+                cout<<endl<<"e.edit\nd.delete\nn.next\np.previous\nb.back"<<endl;
                 cin>>choice;
-                system(CLEAR);
                 switch (choice){
                     case 'n': {
-                        ind++;
-                        if (ind == loggedInUser->contents.size()){
-                            ind--;
-                            last_message = "no contents after this";
+                        if (ind + 1 >= buff.size()){
+                            cout<<"no more content after this"<<endl;
                         }
-                        loggedInUser->get_my_content(ind);
+                        else{
+                            ind++;
+                        }
                         break;
                     }
                     case 'p': {
-                        ind--;
-                        if (ind < 0){
-                            ind++;
-                            last_message = "no content prior to this";
+                        if (ind - 1 < 0){
+                            cout<<"no more content prior to this"<<endl;
                         }
-                        loggedInUser->get_my_content(ind);
+                        else{
+                            ind--;
+                        }
                         break;
                     }
                     case 'd': {
-                        loggedInUser->remove_content(*(loggedInUser->contents[ind]));
-                        if (loggedInUser->contents.size() == 0) {
-                            menuState = MenuState::LOGGED_IN;
-                            last_message = "content successfully deleted\nyou have no contents";
-                        } else {
-                            last_message = "content successfully deleted\n";
-                        }
-                        ind = 0;
+
                         break;
                     }
                     case 'e':{
-                        cout<<"Please enter your text to replace:"<<endl;
-                        cin>>user_text;
-                        loggedInUser->contents[ind]->edit_content(user_text);
-                        loggedInUser->get_my_content(ind);
+
                         break;
                     }
                     case 'b':{
-                        ind = 0;
                         menuState = MenuState::LOGGED_IN;
+                        ind = 0;
+                        buff.clear();
                         break;
                     }
                 }
