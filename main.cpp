@@ -216,20 +216,37 @@ int main() {
                 break;
             }
             case MenuState::SEARCH:{
+                cout<<"___________________________________________________________"<<endl;
                 buff[ind].print_content();
-                cout<<endl<<"r.reply\nn.next\nprevious\nb.back"<<endl;
+                cout<<endl<<"r.reply\nn.next\np.previous\nb.back"<<endl;
                 cin>>choice;
                 switch (choice){
                     case ('n'):{
+                        if (ind + 1 >= buff.size()){
+                            cout<<"no more content after this"<<endl;
+                        }
+                        else{
+                            ind++;
+                        }
                         break;
                     }
                     case ('p'):{
+                        if (ind - 1 < 0){
+                            cout<<"no more content prior to this"<<endl;
+                        }
+                        else{
+                            ind--;
+                        }
                         break;
                     }
                     case ('r'):{
+
                         break;
                     }
                     case ('b'):{
+                        menuState = MenuState::LOGGED_IN;
+                        ind = 0;
+                        buff.clear();
                         break;
                     }
                 }
